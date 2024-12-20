@@ -2972,7 +2972,7 @@ impl<T: AsRef<[u32]>> DFA<T> {
 
     /// Return the total number of states in this DFA. Every DFA has at least
     /// 1 state, even the empty DFA.
-    pub(crate) fn state_len(&self) -> usize {
+    pub fn state_len(&self) -> usize {
         self.tt.len()
     }
 
