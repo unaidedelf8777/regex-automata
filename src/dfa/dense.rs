@@ -1966,6 +1966,20 @@ impl<T: AsRef<[u32]>> DFA<T> {
         self.as_ref().write_to::<wire::LE>(dst)
     }
 
+    /// return the id's of match ( final ) states
+    pub fn match_state_ids(&self) -> Vec<StateID> {
+        let mut ids = Vec::new();
+        if self.special.matches() {
+            let mut current = self.special.min_match;
+            while current <= self.special.max_match {
+                ids.push(current);
+                // Move to next state using stride
+                current = StateID::new(current.as_usize() + self.stride()).unwrap();
+            }
+        }
+        ids
+    }
+
     /// Serialize this DFA as raw bytes to the given slice, in big endian
     /// format. Upon success, the total number of bytes written to `dst` is
     /// returned.
