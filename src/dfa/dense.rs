@@ -2959,6 +2959,12 @@ impl<T: AsRef<[u32]>> DFA<T> {
         &self.special
     }
 
+    #[cfg_attr(feature = "perf-inline", inline(always))]
+    fn next_state_with_class(&self, current: StateID, class: u8) -> StateID {
+        let o = current.as_usize() + usize::from(class);
+        self.trans()[o]
+    }
+
     /// Return the info about special states as a mutable borrow.
     #[cfg(feature = "dfa-build")]
     pub(crate) fn special_mut(&mut self) -> &mut Special {
