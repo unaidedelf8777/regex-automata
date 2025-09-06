@@ -2960,7 +2960,7 @@ impl<T: AsRef<[u32]>> DFA<T> {
     }
 
     #[cfg_attr(feature = "perf-inline", inline(always))]
-    fn next_state_with_class(&self, current: StateID, class: u8) -> StateID {
+    pub fn next_state_with_class(&self, current: StateID, class: u8) -> StateID {
         let o = current.as_usize() + usize::from(class);
         self.trans()[o]
     }
